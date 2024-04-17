@@ -2,32 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+*{
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+html,body{
+  height: 100%;
+  width: 100%;
+}
+#image_1_div{
+    border: solid 4px rgb(206, 68, 68);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+#imgb{
+  position: absolute;
+  z-index: 50;
+  left: 8.3%;
+  top: 16.3%;
+  height: 38%;
+  width: 38%;
+  border-radius: 100%;
+  
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+input[type="file"]{
+  display: none;
 }
+#NameOrTitleTextDiv{
+  position: absolute;
+  z-index: 20;
+  top: 58%;
+  left: 10%;
+  @apply text-xs flex flex-col items-center justify-center
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+}
+#flag{
+  position: absolute;
+  z-index: 20;
+  top: 57%;
+  left: 15%;
+  height: 200px;
+  font-size: 100px;
+  color: rgb(71, 66, 66);
+
+}
+#divele{
+  height: 3216px;
+  width: 3216px;
+  position: fixed;
+}
+#BanerImage{
+  height: 100%;
+  width: 100%;
 }

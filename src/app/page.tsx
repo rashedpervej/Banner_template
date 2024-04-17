@@ -1,112 +1,257 @@
+"use client";
 import Image from "next/image";
-
+import { useState } from "react";
+import html2canvas from "html2canvas";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 export default function Home() {
+  const router = useRouter();
+  const [nameAndTitle, setNameAndTitle] = useState({ name: "", title: "" });
+  const [picturesData, setPicturesData] = useState("");
+  const onBase64Encripted = async (e: any) => {
+    try {
+      const reader: any = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        setPicturesData(reader.result);
+      };
+    } catch (error: any) {
+      console.log("file not found");
+    }
+  };
+  const onDownLoad = () => {
+    const DivEle: any = document.querySelector("#image_1_div") as HTMLElement;
+    const banerImage = document.querySelector("#bannerImage") as HTMLElement;
+    const titleAndText = document.querySelector(
+      "#NameOrTitleTextDiv"
+    ) as HTMLElement;
+    DivEle.setAttribute("id", "divele");
+    banerImage.setAttribute("id", "BanerImage");
+    titleAndText.setAttribute("id", "flag");
+    html2canvas(DivEle).then(function (canvas) {
+      const base64Image = canvas.toDataURL("**/png");
+      const anchor = document.createElement("a");
+      anchor.setAttribute("href", base64Image);
+      console.log(anchor);
+      anchor.setAttribute("download", "my_image.png");
+      anchor.click();
+      anchor.remove();
+      DivEle.removeAttribute("id");
+      banerImage.removeAttribute("id");
+      titleAndText.removeAttribute("id");
+      setPicturesData("");
+      setNameAndTitle({ ...nameAndTitle, name: "", title: "" });
+      router.refresh();
+    });
+  };
+  const onYoutube = () => {
+    alert("It's created By Hirock.....youtube link is not available yet");
+  };
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className=" pr-10 pl-10 bg-slate-100 h-screen overflow-y-scroll pt-14">
+      <div className=" flex items-center justify-center z-50 fixed top-0  right-0 left-0 pl-10 pr-10">
+        <div className=" w-full flex items-center">
+          <Image
+            src={"/images/nagat.png"}
+            alt="img"
+            width={60}
+            height={60}
+            className=" absolute ml-5"
+          />
+          <input type="text" className=" w-full h-10 pl-20 rounded-full " />
+        </div>
+      </div>
+      <div>
+        <div className=" border h-20 bg-green-400">Animated image</div>
+        <div
+          id="text_section"
+          className=" mt-4 flex flex-col items-center text-xs gap-2"
+        >
+          <h1>শুভ নবর্বষ ১৪৩১</h1>
+          <p>
+            নতুন বছরে নতুন স্বপ্নে
+            <br />
+            এগিয়ে যাই নতুন সহিসে
+          </p>
+          <p className=" text-center ">
+            নতুন বছরে আমাদের স্বপ্নগুলো সাহসের স্পর্শে পূর্ণতা পাক, নতুন বাংলা
+            বছরে সবার জন্য এই শুভকামনা। বাঙালিদের প্রাণের উৎসব বাংলা নববর্ষের
+            আনন্দ
+            <br />
+            প্রতিটি হৃদয়ে পৌঁছে দিতে, আপনাকেও চাই আমাদের পাশে।
+          </p>
+          <p>
+            আপনার ছবি এবং নাম দিয়ে আপনিও অংশগ্রহণ করতে পারেন বাঙালির এই প্রাণের
+            উৎসবে।
+          </p>
+          <p>উৎসব হোক সবার, সবাইকে শুভ নববর্ষ।</p>
+          <p>
+            খুব সহজেই আপনার ছবিটি তৈরি করে ডাউনলোড করে নিন, এবং শেয়ার করুন আপনার
+            সোশ্যাল মিডিয়ার পাতায়।
+          </p>
+          <p className=" text-orange-700">
+            ডাউনলোড করার আগে আপনার পছন্দমতো একটি ছবি সিলেক্ট করে নিন।
+          </p>
+        </div>
+
+        <div className=" mt-5 flex justify-center gap-2 items-center max-sm:flex-col max-sm:gap-2 ">
+          <div
+            id="image_1_div"
+            className="cursor-pointer relative p-5 max-sm:p-2 rounded-md  sm:h-52 md:h-72 lg:h-96 max-sm:h-52 max-sm:w-52 sm:w-52 md:w-72 lg:w-96 "
           >
-            By{" "}
+            {!picturesData ? null : (
+              <img
+                id="imgb"
+                src={picturesData}
+                alt="img"
+                width={50}
+                height={50}
+                className=" "
+              />
+            )}
+            <div id="NameOrTitleTextDiv" className="">
+              <h1 id="" className=" text-center ">
+                {nameAndTitle.name}
+              </h1>
+              <h1 id="" className=" text-center ">
+                {nameAndTitle.title}
+              </h1>
+            </div>
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+              id="bannerImage"
+              src={"/images/frame.png"}
+              alt="pic"
+              height={500}
+              width={500}
+              className=" absolute left-0 right-0 top-0 bottom-0"
             />
-          </a>
+          </div>
+
+          <div
+            id="image_1_div"
+            className="cursor-pointer relative p-5 max-sm:p-2 rounded-md  sm:h-52 md:h-72 lg:h-96 max-sm:h-52 max-sm:w-52 sm:w-52 md:w-72 lg:w-96 "
+          >
+            {!picturesData ? null : (
+              <img
+                id="imgb"
+                src={picturesData}
+                alt="img"
+                width={50}
+                height={50}
+                className=" "
+              />
+            )}
+            <div id="NameOrTitleTextDiv" className="">
+              <h1 id="" className=" text-center ">
+                {nameAndTitle.name}
+              </h1>
+              <h1 id="" className=" text-center ">
+                {nameAndTitle.title}
+              </h1>
+            </div>
+            <Image
+              id="bannerImage"
+              src={"/images/frame.png"}
+              alt="pic"
+              height={500}
+              width={500}
+              className=" absolute left-0 right-0 top-0 bottom-0"
+            />
+          </div>
+        </div>
+
+        <div className=" p-5 bg-white h-48 max-sm:h-72 rounded-md border-t-4 border-red-500 mt-5 mb-20">
+          <h1 className=" text-center">
+            ডিজিটাল ব্যানারের জন্য আপনার তথ্য দিন:
+          </h1>
+          <div className=" flex gap-3 flex-col">
+            <div className=" flex max-sm:flex-col max-sm:gap-2 sm:gap-3 mt-4 sm:justify-center">
+              <div className="flex items-center">
+                <input
+                  placeholder="sd"
+                  type="file"
+                  className=" "
+                  onChange={onBase64Encripted}
+                  id="uploadImage"
+                />
+                <label
+                  htmlFor="uploadImage"
+                  className=" bg-red-50 h-9 sm:w-40 max-sm:w-96 rounded-md border-red-600 border text-center text-xs flex items-center justify-center"
+                >
+                  <h1 className=" text-slate-400">আপনার ছবি সংযুক্ত করুন</h1>
+                </label>
+              </div>
+              <input
+                placeholder="আপনার নাম"
+                type="text"
+                className=" bg-red-50 h-9 rounded-md border-red-600 border text-xs pl-2"
+                name="name"
+                value={nameAndTitle.name}
+                onChange={(e) =>
+                  setNameAndTitle({ ...nameAndTitle, name: e.target.value })
+                }
+              />
+              <input
+                placeholder="আপনার পদবি এবং স্থান"
+                type="text"
+                className=" bg-red-50 h-9 rounded-md border-red-600 border text-xs pl-2"
+                name="name"
+                value={nameAndTitle.title}
+                onChange={(e) =>
+                  setNameAndTitle({ ...nameAndTitle, title: e.target.value })
+                }
+              />
+            </div>
+            <div className=" flex items-center justify-center">
+              {!picturesData ? (
+                <button className=" text-white border bg-red-600 w-40 h-10 rounded-full hover:bg-red-800 active:bg-red-900 ">
+                  download
+                </button>
+              ) : (
+                <button
+                  onClick={onDownLoad}
+                  className=" text-white border bg-red-600 w-40 h-10 rounded-full hover:bg-red-800 active:bg-red-900 "
+                >
+                  download
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className=" border-green-200 pr-10 pl-10 flex items-center justify-center fixed z-50 bottom-0 left-0 right-0 border">
+        <div className=" bg-white  text-xs justify-around w-full h-16 rounded-t-md flex items-center">
+          <div className="">
+            <h1>© 2024 FIFOTech. All Rights Reserved</h1>
+          </div>
+          <div>
+            <ul className=" flex gap-3">
+              <Link href={""}>
+                <li onClick={onYoutube}>
+                  <Image
+                    src={"/all_svg/youtube-fill.svg"}
+                    alt="pic"
+                    width={15}
+                    height={15}
+                  />
+                </li>
+              </Link>
+              <Link
+                href={"https://www.facebook.com/profile.php?id=100028605347325"}
+              >
+                <li>
+                  <Image
+                    src={"/all_svg/facebook-fill.svg"}
+                    alt="pic"
+                    width={15}
+                    height={15}
+                  />
+                </li>
+              </Link>
+            </ul>
+          </div>
+        </div>
       </div>
     </main>
   );

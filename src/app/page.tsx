@@ -220,39 +220,6 @@ export default function Home() {
         </div>
       </div>
 
-      <div className=" border-green-200 pr-10 pl-10 flex items-center justify-center fixed z-50 bottom-0 left-0 right-0 border">
-        <div className=" bg-white  text-xs justify-around w-full h-16 rounded-t-md flex items-center">
-          <div className="">
-            <h1>© 2024 FIFOTech. All Rights Reserved</h1>
-          </div>
-          <div>
-            <ul className=" flex gap-3">
-              <Link href={""}>
-                <li onClick={onYoutube}>
-                  <Image
-                    src={"/all_svg/youtube-fill.svg"}
-                    alt="pic"
-                    width={15}
-                    height={15}
-                  />
-                </li>
-              </Link>
-              <Link
-                href={"https://www.facebook.com/profile.php?id=100028605347325"}
-              >
-                <li>
-                  <Image
-                    src={"/all_svg/facebook-fill.svg"}
-                    alt="pic"
-                    width={15}
-                    height={15}
-                  />
-                </li>
-              </Link>
-            </ul>
-          </div>
-        </div>
-      </div>
     </main>
   );
 }
